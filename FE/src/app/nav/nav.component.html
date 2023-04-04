@@ -1,37 +1,49 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Final</a>
-    <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Offcanvas navbar large">
+  <div class="container">
+    <a class="navbar-brand" href="#">Hiệp Nhé</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
+      aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Notifications</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Switch account</a>
-        </li>
-        <li class="nav-item dropdown" (click)="toggleMenu()">
-          <a id="dropdown-toggle" class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
-          <ul id="dropdown-menu" class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2"
+      aria-labelledby="offcanvasNavbar2Label">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbar2Label">Offcanvas</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex">
+        <ul class="navbar-nav  flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+        </ul>
+        <div class="dropdown ml-auto p-2" *ngIf="accountService.currentUser$ | async" dropdown>
+          <a class="dropdown-toggle nav-link" dropdownToggle>Welcome {{model.userName}}!</a>
+          <ul class="dropdown-menu mt-3" *dropdownMenu>
+            <li><a class="dropdown-item"><i class="bi bi-person-gear "></i> Edit Profile</a></li>
+            <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
           </ul>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+        </div>
+        <div class="dropdown ml-auto p-2" *ngIf="!(accountService.currentUser$ | async)" dropdown>
+          <a class="dropdown-toggle nav-link" dropdownToggle> Account <i class="bi bi-person-vcard"></i></a>
+          <ul class="dropdown-menu mt-3" *dropdownMenu>
+            <li><a  class="dropdown-item" (click)="login()"><i class="bi bi-person-lines-fill"></i> Login</a></li>
+            <li><a  class="dropdown-item" (click)="register()"><i class="bi bi-box-arrow-right mr-3"></i> Sign Up</a></li>
+          </ul>
+        </div>
+        <!-- <form #loginForm="ngForm" class="d-flex mt-3 mt-lg-0" (ngSubmit)="login()" autocomplete="off" *ngIf="!(accountService.currentUser$ | async)">
+          <input class="form-control ml-auto me-2" name="userName" [(ngModel)]="model.userName" type="text"
+            placeholder="Username">
+          <input class="form-control ml-auto me-2" name="password" [(ngModel)]="model.password" type="text"
+            placeholder="Password">
+          <button class="btn btn-outline-success" type="submit">Login</button>
+        </form> -->
+      <app-register #registerModal></app-register>
+      <app-login #loginModal></app-login>
+      </div>
     </div>
   </div>
 </nav>
