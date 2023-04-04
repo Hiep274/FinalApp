@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AccountService } from './../_services/account.service';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -8,9 +9,16 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 })
 export class RegisterComponent implements OnInit {
   @ViewChild("register", { static: true }) register: ModalDirective | undefined;
+  @Output() closeModal = new EventEmitter();
   userName: any;
   password: any;
-  constructor() { }
+  model: any = {
+    userName: '',
+    password: ''
+  };
+  constructor(
+    private acc: AccountService
+  ) { }
 
   ngOnInit() {
   }
@@ -20,6 +28,14 @@ export class RegisterComponent implements OnInit {
   }
   close() {
     this.register?.hide();
+  }
+
+  submit() {
+    this.model.userName = this.userName;
+    this.model.password = this.password;
+    this.acc.register(this.model);
+    this.close();
+    this.closeModal.emit(this.userName);
   }
 
 }

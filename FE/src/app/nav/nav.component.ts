@@ -14,7 +14,8 @@ export class NavComponent implements OnInit {
   @ViewChild('registerModal', { static: true }) registerModal: RegisterComponent | undefined;
   @ViewChild('loginModal', { static: true }) loginModal: LoginComponent | undefined;
   model: any = {};
-  currentUser$: Observable<User | null> | undefined;
+  userName: any;
+  currentUser$: Observable<User | null> = new Observable<User | null>();
   constructor(
     private render: Renderer2,
     public accountService: AccountService
@@ -22,6 +23,7 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser$ = this.accountService.currentUser$;
+    this.userName = JSON.parse(localStorage.getItem('user') || '{}').userName;
   }
 
   login(){
@@ -38,6 +40,9 @@ export class NavComponent implements OnInit {
     this.registerModal?.show();
   }
 
+  reload(param: any){
+    this.userName = param;
+  }
   // //click event for dropdown menu
   // toggleMenu() {
   //   if (document.getElementById('dropdown-toggle')?.classList.contains('show')) {

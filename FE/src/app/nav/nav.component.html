@@ -21,7 +21,7 @@
           </li>
         </ul>
         <div class="dropdown ml-auto p-2" *ngIf="accountService.currentUser$ | async" dropdown>
-          <a class="dropdown-toggle nav-link" dropdownToggle>Welcome {{model.userName}}!</a>
+          <a class="dropdown-toggle nav-link" dropdownToggle>Welcome {{userName}}!</a>
           <ul class="dropdown-menu mt-3" *dropdownMenu>
             <li><a class="dropdown-item"><i class="bi bi-person-gear "></i> Edit Profile</a></li>
             <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
@@ -41,7 +41,7 @@
             placeholder="Password">
           <button class="btn btn-outline-success" type="submit">Login</button>
         </form> -->
-      <app-register #registerModal></app-register>
+      <app-register #registerModal (closeModal)="reload($event)"></app-register>
       <app-login #loginModal></app-login>
       </div>
     </div>

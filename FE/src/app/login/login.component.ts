@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { AccountService } from '../_services/account.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +14,13 @@ export class LoginComponent implements OnInit {
   password: any;
   invalidUser: boolean = false;
   invalidPass: boolean = false;
-
-  constructor() { }
+  input: any = {
+    userName: '',
+    password: ''
+  };
+  constructor(
+    public accountService: AccountService
+  ) { }
 
   ngOnInit() {
   }
@@ -23,6 +30,8 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    this.input.userName = this.userName;
+    this.input.password = this.password;
     if (this.userName == null || this.userName == "" || this.userName == undefined || this.userName.trim() == "") {
       this.invalidUser = true;
       console.log("invalid user");
@@ -37,9 +46,15 @@ export class LoginComponent implements OnInit {
     else {
       this.invalidPass = false;
     }
-    // if (this.invalidUser == false && this.invalidPass == false) {
-    //   this.login?.hide();
-    // }
+    if (this.invalidUser == false && this.invalidPass == false) {
+
+      this.accountService.login(this.input)
+      .pipe(finalize (() => {
+        this.login?.hide();
+      }))
+      .subscribe(response => {
+      });
+    }
   }
   close() {
     this.login?.hide();
