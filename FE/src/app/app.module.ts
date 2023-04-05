@@ -12,13 +12,15 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AppBsModalModule } from 'src/shared/common/appBsModal/app-bs-modal.module';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { ListsComponent } from './lists/lists.component';
 @NgModule({
-  declarations: [		
+  declarations: [
     AppComponent,
       NavComponent,
       HomeComponent,
       RegisterComponent,
-      LoginComponent
+      LoginComponent,
+      ListsComponent
    ],
   imports: [
     BrowserModule,
@@ -27,8 +29,7 @@ import { LoginComponent } from './login/login.component';
     BrowserAnimationsModule,
     FormsModule,
     BsDropdownModule.forRoot(),
-    AppBsModalModule
-
+    AppBsModalModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
