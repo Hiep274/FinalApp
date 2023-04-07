@@ -13,15 +13,17 @@
       </div>
       <div class="offcanvas-body d-flex">
         <ul class="navbar-nav  flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" routerLink="/products" routerLinkActive="active">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/lists" routerLinkActive="active" >List</a>
-          </li>
+          <ng-container  *ngIf="accountService.currentUser$ | async">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" routerLink="/products" routerLinkActive="active">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/lists" routerLinkActive="active">List</a>
+            </li>
+          </ng-container>
         </ul>
-        <div class="dropdown ml-auto p-2" *ngIf="accountService.currentUser$ | async" dropdown>
-          <a class="dropdown-toggle nav-link" dropdownToggle>Welcome {{userName}}!</a>
+        <div class="dropdown ml-auto p-2" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+          <a class="dropdown-toggle nav-link" dropdownToggle>Welcome {{user.userName | titlecase}}!</a>
           <ul class="dropdown-menu mt-3" *dropdownMenu>
             <li><a class="dropdown-item"><i class="bi bi-person-gear "></i> Edit Profile</a></li>
             <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
@@ -30,8 +32,9 @@
         <div class="dropdown ml-auto p-2" *ngIf="!(accountService.currentUser$ | async)" dropdown>
           <a class="dropdown-toggle nav-link" dropdownToggle> Account <i class="bi bi-person-vcard"></i></a>
           <ul class="dropdown-menu mt-3" *dropdownMenu>
-            <li><a  class="dropdown-item" (click)="login()"><i class="bi bi-person-lines-fill"></i> Login</a></li>
-            <li><a  class="dropdown-item" (click)="register()"><i class="bi bi-box-arrow-right mr-3"></i> Sign Up</a></li>
+            <li><a class="dropdown-item" (click)="login()"><i class="bi bi-person-lines-fill"></i> Login</a></li>
+            <li><a class="dropdown-item" (click)="register()"><i class="bi bi-box-arrow-right mr-3"></i> Sign Up</a>
+            </li>
           </ul>
         </div>
         <!-- <form #loginForm="ngForm" class="d-flex mt-3 mt-lg-0" (ngSubmit)="login()" autocomplete="off" *ngIf="!(accountService.currentUser$ | async)">
@@ -41,8 +44,8 @@
             placeholder="Password">
           <button class="btn btn-outline-success" type="submit">Login</button>
         </form> -->
-      <app-register #registerModal (closeModal)="reload($event)"></app-register>
-      <app-login #loginModal></app-login>
+        <app-register #registerModal ></app-register>
+        <app-login #loginModal></app-login>
       </div>
     </div>
   </div>

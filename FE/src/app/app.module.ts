@@ -13,6 +13,7 @@ import { AppBsModalModule } from 'src/shared/common/appBsModal/app-bs-modal.modu
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ListsComponent } from './lists/lists.component';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,9 @@ import { ListsComponent } from './lists/lists.component';
     FormsModule,
     BsDropdownModule.forRoot(),
     AppBsModalModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
